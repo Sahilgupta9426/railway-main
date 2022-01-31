@@ -1,0 +1,82 @@
+{% extends 'files/base.html' %}
+{% block title %}Home {% endblock title %}
+
+{% block body %} 
+
+   
+
+
+ <div class="modal fade" id="modal-train" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div> 
+  
+  <div class="container showhide">
+    {% include 'files/ajaxinclude/train_results.html' %}
+
+  </div>
+
+  <div id="customer"> </div>
+{% endblock body %}
+{% block scripts %}
+    
+<script>
+  $(function () {
+    /* Functions */
+    $( document ).ready(function() {
+      var btn = $(this);
+      $.ajax({
+        url: "{% url 'searchform' %}",
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+          $("#modal-train .modal-content").html("");
+          $("#modal-train").modal("show");
+        },
+        success: function (data) {
+          $("#modal-train .modal-content").html(data.html_form);
+        }
+      });
+    });
+    
+    var showdata = function () {
+      var form = $(this);
+      $.ajax({
+        url: form.attr("action"),
+        data: form.serialize(),
+        type: form.attr("method"),
+        dataType: 'json',
+        success: function (data) {
+          if (data.form_is_valid) {
+            $("#train-table tbody").html(data.html_train_list);
+            $("#modal-train").modal("hide");
+            $(".showhide").show();
+          }
+          else {
+            $("#modal-train .modal-content").html(data.html_form);
+          }
+        }
+      });
+      return false;
+    
+    };
+    
+    
+
+    /* Binding */
+    
+    // Create book
+    
+    $("#modal-train").on("submit", ".js-book-create-form", showdata);
+    $(".showhide").hide();
+    
+    });
+  //outside of function
+
+  
+
+</script> 
+{% endblock scripts %}
