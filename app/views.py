@@ -13,7 +13,7 @@ from django.http import HttpResponse
 from .models import Customer, Train, Travel_Schedule
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomerForm, TravelForm 
-
+from django.template import RequestContext
 # Create your views here.
 def home(request):
     return render(request,'files/home.html')
@@ -24,10 +24,18 @@ def searchajax(request, form, template_name):
         if form.is_valid():
             # print(request.POST['source'],request.POST['destination'])
             t = Travel_Schedule.objects.filter(source=request.POST['source'], destination=request.POST['destination']) 
+            # this loop is used for get seat from Train Table which is fecthed with foreign key
+            
+            for train_num in t: # sending Travel_schedule object in train_num
+                p=train_num.train_no #saving train number from Travel Schedule in p variable
+                a=Train.objects.filter(sid=p)#searching 'sid' whic is Train Number in Train Model 
+                for obj in a: #sending all 'a' object in obj 
+                    seat=obj.seat1 #to get total seats
+            
             date=request.POST['date']
-            print("date:",date)
+            
             data['html_train_list'] = render_to_string('files/ajaxinclude/train_results.html', {
-                'trains': t,'date':date
+                'trains': t,'date':date,'seat':seat
             })
             
             data['form_is_valid'] = True
@@ -48,13 +56,15 @@ def searchform(request ):
 
 # booking customer details
 def customer(request,pk):
-    t=Travel_Schedule(train_no=pk)
-    print(t)
+    t=Travel_Schedule.objects.filter(train_no=pk)
+    seat=Train.objects.filter(sid=pk)
+    
+    
     form=CustomerForm()
     data=dict()
     data["html_form"]=render_to_string('files/ajaxinclude/booking_detail.html', {
-                "form":form
-            })
+                "form":form,'trains':t,'seat':seat
+            },request=request)
     return JsonResponse(data)
     
     

@@ -1,1 +1,11 @@
+<div class="container mt-2">
+{% for t in trains %}
+<h6>Source : {{t.source}}</h6>  
+<h6>Destination : {{t.destination}}</h6>
+<h6>Train : {{t.train_no}}</h6>
+{% for seats in seat %}<h6>Seats : {{seats.seat1}}</h6>{% endfor %}
+
+{% endfor %}
+</div>
 {% include 'files/ajaxinclude/bookingform.html' %}
+

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import  ChoiceField, ModelForm, TextInput
 from .models import Customer
 
 class TravelForm(forms.Form):
@@ -18,3 +18,16 @@ class CustomerForm(ModelForm):
      class Meta:
         model = Customer
         fields = ['cname','gender','number','user']
+        widgets = {
+            'cname': TextInput(attrs={'class':'form-control'}),
+            # 'gender': TextInput(attrs={'class':'form-control'}),
+            'number': TextInput(attrs={'class':'form-control'}),
+            # 'user': TextInput(attrs={'class':'form-control'}),
+        }
+        labels  = {
+        'cname':'Name',
+        'gender':'Gender',
+        'number':'Number',
+        'user':'User'
+
+        }

@@ -19,7 +19,7 @@
 
   </div>
 
-  <div id="customer"> </div>
+  <div id="customer" class="container"> </div>
 {% endblock body %}
 {% block scripts %}
     
@@ -51,7 +51,7 @@
         dataType: 'json',
         success: function (data) {
           if (data.form_is_valid) {
-            $("#train-table tbody").html(data.html_train_list);
+            $("#train-table").html(data.html_train_list);
             $("#modal-train").modal("hide");
             $(".showhide").show();
           }
