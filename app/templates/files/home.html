@@ -26,6 +26,7 @@
 <script>
   $(function () {
     /* Functions */
+    // For load search form to search trains  
     $( document ).ready(function() {
       var btn = $(this);
       $.ajax({
@@ -41,7 +42,7 @@
         }
       });
     });
-    
+    //get train details in tables
     var showdata = function () {
       var form = $(this);
       $.ajax({
@@ -68,10 +69,10 @@
 
     /* Binding */
     
-    // Create book
+    //load form in order To search train Details 
     
-    $("#modal-train").on("submit", ".js-book-create-form", showdata);
-    $(".showhide").hide();
+    $("#modal-train").on("submit", ".js-train-search-form", showdata);
+    $(".showhide").hide(); //to hide table header 
     
     });
   //outside of function

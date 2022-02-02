@@ -1,8 +1,5 @@
-
-
-
 <div class="container mt-3">
-    <table class="table " id="train-table">
+  <table class="table " id="train-table">
     <thead>
       <tr>
         <th scope="col">Train No</th>
@@ -12,40 +9,41 @@
         <th scope="col">Arrival time</th>
         <th scope="col">Fare</th>
         <th scope="col">Date</th>
-        <th scope="col">Book</th>
+
         <th scope="col">Seats</th>
-        
+        <th scope="col">Book Ticket</th>
+
       </tr>
     </thead>
-    
-    
     <tbody>
-{% for t in trains %}
-<tr>
-  <th scope="row">{{t.train_no}}</th>
-  <td>{{t.train_name}}</td>
-  <td>{{t.source}}</td>
-  <td>{{t.destination}}</td>
-  <td>{{t.arrival_time}}</td>
-  <td>{{t.fare}}</td>
-  <td>{{date}}</td>
-  <td >
-    <button type="button" id="customerID"
-    class="btn btn-warning btn-sm js-cutomer-create" data-url="{% url 'customer' t.train_no  %}">
- Book</button>
-</td>
-<td><button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="{{seat}}">
-  Seat Avalaibilty
-</button></td>
-</tr>
+      {% for t,s in trains %}
 
-{% endfor %}
-</tbody>
-</table>
+      <tr>
+        <th scope="row">{{t.train_no}}</th>
+        <td>{{t.train_name}}</td>
+        <td>{{t.source}}</td>
+        <td>{{t.destination}}</td>
+        <td>{{t.arrival_time}}</td>
+        <td>{{t.fare}}</td>
+        <td>{{date}}</td>
+        <td><button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"
+            title="{{s}}">
+            Seat Avalaibilty
+          </button></td>
+        <td>
+          <button type="button" id="customerID" class="btn btn-warning btn-sm js-cutomer-create"
+            data-url="{% url 'customer' t.train_no  %}">
+            Book</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 <script>
-  $(document).ready(function(){
+  //to show this table on home page and getting data by ajax from views
+  $(document).ready(function () {
     var getcutomer = function () {
       var btn = $(this);
       console.log("hello")
@@ -56,19 +54,20 @@
         beforeSend: function () {
           $("#customer").html("");
           console.log("hello")
-         
+
         },
         success: function (data) {
           $(".showhide").hide();
           $("#customer").html(data.html_form);
-          
+
           console.log("hello")
         }
       });
     };
     $("#customerID").click(getcutomer)
   });
+  //for seat check 
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-  })
+  }) 
 </script>

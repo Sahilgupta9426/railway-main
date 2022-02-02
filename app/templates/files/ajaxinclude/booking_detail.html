@@ -1,3 +1,4 @@
+<!-- this is train and seat detail which customer want to book -->
 <div class="container mt-2">
 {% for t in trains %}
 <h6>Source : {{t.source}}</h6>  
@@ -7,5 +8,6 @@
 
 {% endfor %}
 </div>
+<!-- this is customer booking form -->
 {% include 'files/ajaxinclude/bookingform.html' %}
 

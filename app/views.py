@@ -3,15 +3,11 @@ from urllib import response
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse,HttpResponseRedirect
 from django.template.loader import render_to_string
-# from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 import json
-# from django.contrib.auth.forms import AuthenticationForm
-# from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from .models import Customer, Train, Travel_Schedule
-from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomerForm, TravelForm 
 from django.template import RequestContext
 # Create your views here.
@@ -22,21 +18,32 @@ def searchajax(request, form, template_name):
     data = dict() 
     if request.method == 'POST':
         if form.is_valid():
+            date=request.POST['date']
             # print(request.POST['source'],request.POST['destination'])
             t = Travel_Schedule.objects.filter(source=request.POST['source'], destination=request.POST['destination']) 
             # this loop is used for get seat from Train Table which is fecthed with foreign key
-            
+           
+            # from here is test
+            listseat=list()
             for train_num in t: # sending Travel_schedule object in train_num
                 p=train_num.train_no #saving train number from Travel Schedule in p variable
                 a=Train.objects.filter(sid=p)#searching 'sid' whic is Train Number in Train Model 
+                # print("all object details",a)
                 for obj in a: #sending all 'a' object in obj 
                     seat=obj.seat1 #to get total seats
-            
-            date=request.POST['date']
-            
-            data['html_train_list'] = render_to_string('files/ajaxinclude/train_results.html', {
-                'trains': t,'date':date,'seat':seat
-            })
+                    print("all object details",seat)
+                    listseat.append(seat)
+                    
+            print(listseat)
+            mylist = zip(t, listseat)
+            context = {
+            'trains': mylist,
+            'date':date
+                }
+            # end test
+            # data['html_train_list'] = render_to_string('files/ajaxinclude/train_results.html', {
+            #     'trains': t,'date':date,'seat':listseat            })
+            data['html_train_list'] = render_to_string('files/ajaxinclude/train_results.html', context)
             
             data['form_is_valid'] = True
             
