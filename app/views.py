@@ -22,7 +22,8 @@ def searchajax(request, form, template_name):
             # print(request.POST['source'],request.POST['destination'])
             t = Travel_Schedule.objects.filter(source=request.POST['source'], destination=request.POST['destination']) 
             # this loop is used for get seat from Train Table which is fecthed with foreign key
-           
+            searchajax.date2=request.POST['date']
+            
             # from here is test
             listseat=list()
             for train_num in t: # sending Travel_schedule object in train_num
@@ -31,10 +32,10 @@ def searchajax(request, form, template_name):
                 # print("all object details",a)
                 for obj in a: #sending all 'a' object in obj 
                     seat=obj.seat1 #to get total seats
-                    print("all object details",seat)
+                    # print("all object details",seat)
                     listseat.append(seat)
                     
-            print(listseat)
+            # print(listseat)
             mylist = zip(t, listseat)
             context = {
             'trains': mylist,
@@ -63,14 +64,13 @@ def searchform(request ):
 
 # booking customer details
 def customer(request,pk):
+    date=searchajax.date2
     t=Travel_Schedule.objects.filter(train_no=pk)
     seat=Train.objects.filter(sid=pk)
-    
-    
     form=CustomerForm()
     data=dict()
     data["html_form"]=render_to_string('files/ajaxinclude/booking_detail.html', {
-                "form":form,'trains':t,'seat':seat
+                "form":form,'trains':t,'seat':seat,'date':date
             },request=request)
     return JsonResponse(data)
     

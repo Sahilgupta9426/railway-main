@@ -1,5 +1,6 @@
 {% load widget_tweaks %}
-<form method="post" action="" class="">
+<div class="container col-9">
+<form method="post" action="" class=" ">
     {% csrf_token %} 
 {% for field in form %}
   <div class="form-group{% if field.errors %} has-error{% endif %}">
@@ -13,9 +14,9 @@
 
 
   
-  <button type="submit" class="btn btn-primary">Make Payment</button>
+  <button type="submit" class="btn btn-primary mt-2">Make Payment</button>
 
 </form>
 
 
-  
+</div>

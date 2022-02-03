@@ -1,13 +1,15 @@
 <!-- this is train and seat detail which customer want to book -->
-<div class="container mt-2">
+<div class="container mt-2 col-9">
 {% for t in trains %}
 <h6>Source : {{t.source}}</h6>  
 <h6>Destination : {{t.destination}}</h6>
-<h6>Train : {{t.train_no}}</h6>
-{% for seats in seat %}<h6>Seats : {{seats.seat1}}</h6>{% endfor %}
+<h6>Train No: {{t.train_no}}</h6>
+<h6>Train Name: {{t.train_name}}</h6>
 
+<h6>Date : {{date}}</h6>
 {% endfor %}
-</div>
+{% for seats in seat %}<h6>Seats Available : {{seats.seat1}}</h6>{% endfor %}
 <!-- this is customer booking form -->
-{% include 'files/ajaxinclude/bookingform.html' %}
+</div>
 
+{% include 'files/ajaxinclude/bookingform.html' %}

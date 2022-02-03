@@ -11,7 +11,6 @@ class Travel_Schedule(models.Model):
     fare=models.IntegerField()
 class Train(models.Model):
     id=models.IntegerField(primary_key=True)
-    
     seat1=models.IntegerField()
     seat2=models.IntegerField()
     seat3=models.IntegerField()

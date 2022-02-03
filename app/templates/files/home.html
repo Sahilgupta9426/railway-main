@@ -1,33 +1,33 @@
 {% extends 'files/base.html' %}
 {% block title %}Home {% endblock title %}
 
-{% block body %} 
-
-   
+{% block body %}
 
 
- <div class="modal fade" id="modal-train" >
-    <div class="modal-dialog">
-      <div class="modal-content">
 
-      </div>
+
+<div class="modal fade" id="modal-train">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
     </div>
-  </div> 
-  
-  <div class="container showhide">
-    {% include 'files/ajaxinclude/train_results.html' %}
-
   </div>
+</div>
 
-  <div id="customer" class="container"> </div>
+<div class="container showhide">
+  {% include 'files/ajaxinclude/train_results.html' %}
+
+</div>
+
+<div id="customer" class="container"> </div>
 {% endblock body %}
 {% block scripts %}
-    
+
 <script>
   $(function () {
     /* Functions */
     // For load search form to search trains  
-    $( document ).ready(function() {
+    $(document).ready(function () {
       var btn = $(this);
       $.ajax({
         url: "{% url 'searchform' %}",
@@ -62,22 +62,22 @@
         }
       });
       return false;
-    
+
     };
-    
-    
+
+
 
     /* Binding */
-    
+
     //load form in order To search train Details 
-    
+
     $("#modal-train").on("submit", ".js-train-search-form", showdata);
     $(".showhide").hide(); //to hide table header 
-    
-    });
+
+  });
   //outside of function
 
-  
 
-</script> 
+
+</script>
 {% endblock scripts %}
